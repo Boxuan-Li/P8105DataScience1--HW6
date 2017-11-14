@@ -1,0 +1,11 @@
+name: "Plotly and Shiny Analysis on Instacart"
+output_dir: "."
+navbar:
+  title: "Home"
+  right:
+    - text: "Plotly"
+      href: Instacart plotly.html
+    - icon: "Shiny"
+      href: Instacart shiny.html
+output:
+  html_document
