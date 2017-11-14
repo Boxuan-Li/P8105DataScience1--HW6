@@ -1,3 +1,10 @@
 ---
 title: "Plotly and Shiny Analysis on Instacart Dataset"
 ---
+
+This website talks about the method used in the analysis on Instacart dataset.
+
+
+_You can click [here](href:Instacart plotly.html) to view the plotly flexdashboard;_
+
+_You can click [here](href:Instacart shiny.html) to view the shiny flexdashboard._

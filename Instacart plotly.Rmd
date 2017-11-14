@@ -2,6 +2,64 @@
 title: "Plotly"
 author: "Boxuan Li"
 date: "11/14/2017"
-output: html_document
+output:
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
 ---
 
+```{r loading packages, message=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  fig.width = 5,
+  fig.asp = .6,
+  out.width = "80%"
+)
+
+library(tidyverse)
+library(rnoaa)
+library(janitor)
+library(stringr)
+library(forcats)
+library(viridis)
+library(plotly)
+```
+
+```{r read and tidy dateset, message=FALSE, warning=FALSE}
+Ins <- read_csv("../data/instacart_train_data.csv.zip") %>%
+  clean_names()
+```
+
+Column {data-width=600}
+-----------------------------------------------------------------------
+
+### Barplot of the total number of purchase for the 10 most popular aisles.
+```{r barplot, message=FALSE, warning=FALSE}
+Ins %>%
+  group_by(., aisle) %>%
+  summarize(., count = n()) %>%
+  top_n(., 10) %>%
+  mutate(., aisle = as.factor(aisle),
+            aisle = fct_reorder(aisle, count)) %>%
+  plot_ly(x = ~aisle, y = ~count, color = ~aisle, type = "bar") %>%
+  layout(title = 'The 10 Most Popular Aisles with Most Orders')
+```
+
+Column {data-width=500, .tabset}
+-----------------------------------------------------------------------
+
+###
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
