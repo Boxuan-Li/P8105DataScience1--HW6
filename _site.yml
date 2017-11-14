@@ -4,8 +4,8 @@ navbar:
   title: "Home"
   right:
     - text: "Plotly"
-      href: Instacart plotly.html
+      href: Instacart_plotly.html
     - icon: "Shiny"
-      href: Instacart shiny.html
+      href: Instacart_shiny.html
 output:
   html_document

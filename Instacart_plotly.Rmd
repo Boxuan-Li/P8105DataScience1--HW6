@@ -1,0 +1,88 @@
+---
+title: "Plotly"
+author: "Boxuan Li"
+date: "11/14/2017"
+output:
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r loading packages, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  fig.width = 5,
+  fig.asp = .6,
+  out.width = "80%"
+)
+
+library(tidyverse)
+library(rnoaa)
+library(janitor)
+library(stringr)
+library(forcats)
+library(viridis)
+library(plotly)
+```
+
+```{r read and tidy dateset, message=FALSE, warning=FALSE}
+Ins <- read_csv("../data/instacart_train_data.csv.zip") %>%
+  clean_names()
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Barplot of Number of Purchase for 10 Most Popular Aisles
+
+```{r barplot, message=FALSE, warning=FALSE}
+Ins %>%
+  group_by(., aisle) %>%
+  summarize(., count = n()) %>%
+  top_n(., 10) %>%
+  mutate(., aisle = as.factor(aisle),
+            aisle = fct_reorder(aisle, count)) %>%
+  plot_ly(x = ~aisle, y = ~count, color = ~aisle, type = "bar") %>%
+  layout(title = 'The 10 Most Popular Aisles with Most Orders')
+```
+
+Column {data-width=450, .tabset}
+-----------------------------------------------------------------------
+
+### Scatterplot Plot of Number of Order by Days in a Week
+
+```{r density plot, message=FALSE, warning=FALSE}
+days_week <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday") %>%
+  factor(., levels = c("Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday", "Sunday"))
+
+Ins_scatter <- Ins %>%
+  select(., order_id, order_dow) %>%
+  distinct(., order_id, order_dow) %>%
+  group_by(., order_dow) %>%
+  summarize(., no_order = n()) %>%
+  mutate(., order_dow = days_week[order_dow+1]) %>%
+  mutate(text_label = str_c("Weekday: ", order_dow, '\nNo.order: ', no_order)) %>% 
+  ggplot(., aes(x = order_dow, y = no_order, color = order_dow)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(title = "Total Number of Orders on Each Day in a Week",
+       x = "Day",
+       y = "Number of orders")
+  
+ggplotly(Ins_scatter)
+```
+
+### Piechart of Orders from Each Department
+
+```{r, piechart, message=FALSE, warning=FALSE}
+Ins %>%
+  group_by(., department) %>%
+  summarize(., count = n()) %>%
+  mutate(text_label = str_c("Department: ", department, '\nNumber_of_orders: ', count)) %>%
+  plot_ly(., labels = ~department, values = ~count, type = 'pie',
+             text = ~text_label) %>%
+  layout(title = 'Total Number of Orders by Department',
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+```
