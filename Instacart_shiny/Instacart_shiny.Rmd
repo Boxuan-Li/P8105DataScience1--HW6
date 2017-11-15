@@ -1,0 +1,70 @@
+---
+title: "Instacart_shiny"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+  runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(janitor)
+library(stringr)
+library(forcats)
+library(viridis)
+library(plotly)
+library(shiny)
+```
+
+```{r}
+Ins <- read_csv("../../data/instacart_train_data.csv.zip") %>%
+  clean_names()
+```
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+max_order = 160000
+min_order = 20000
+  
+# sliderInput widget
+sliderInput("order_range", label = h3("Choose order range"), min = min_order, 
+        max = max_order, value = c(20000, 160000))
+```
+
+
+Row
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+renderPlotly({
+Ins %>%
+  group_by(., aisle) %>%
+  summarize(., count = n()) %>%
+  top_n(., 10) %>% 
+  mutate(count %in% input$order_range[1]:input$order_range[2]) %>% 
+  mutate(., aisle = as.factor(aisle),
+            aisle = fct_reorder(aisle, count)) %>%
+  plot_ly(x = ~aisle, y = ~count, color = ~aisle, type = "bar", colors = "Set2") %>%
+  layout(title = 'The 10 Most Popular Aisles with Most Orders')
+})
+```
+
+Row {.tabset .tabset-fade}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```
