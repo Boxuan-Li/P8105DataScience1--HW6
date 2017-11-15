@@ -42,7 +42,7 @@ Ins %>%
   top_n(., 10) %>%
   mutate(., aisle = as.factor(aisle),
             aisle = fct_reorder(aisle, count)) %>%
-  plot_ly(x = ~aisle, y = ~count, color = ~aisle, type = "bar") %>%
+  plot_ly(x = ~aisle, y = ~count, color = ~aisle, type = "bar", colors = "Set1") %>%
   layout(title = 'The 10 Most Popular Aisles with Most Orders')
 ```
 
@@ -56,7 +56,6 @@ days_week <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thusday", "Friday", 
   factor(., levels = c("Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday", "Sunday"))
 
 Ins_scatter <- Ins %>%
-  select(., order_id, order_dow) %>%
   distinct(., order_id, order_dow) %>%
   group_by(., order_dow) %>%
   summarize(., no_order = n()) %>%
@@ -64,7 +63,6 @@ Ins_scatter <- Ins %>%
   mutate(text_label = str_c("Weekday: ", order_dow, '\nNo.order: ', no_order)) %>% 
   ggplot(., aes(x = order_dow, y = no_order, color = order_dow)) +
   geom_point() +
-  geom_smooth(se = FALSE) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   labs(title = "Total Number of Orders on Each Day in a Week",
        x = "Day",
@@ -79,10 +77,6 @@ ggplotly(Ins_scatter)
 Ins %>%
   group_by(., department) %>%
   summarize(., count = n()) %>%
-  mutate(text_label = str_c("Department: ", department, '\nNumber_of_orders: ', count)) %>%
-  plot_ly(., labels = ~department, values = ~count, type = 'pie',
-             text = ~text_label) %>%
-  layout(title = 'Total Number of Orders by Department',
-         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+  plot_ly(., labels = ~department, values = ~count, type = 'pie', colors = "Set1") %>%
+  layout(title = 'Total Number of Orders by Department')
 ```
