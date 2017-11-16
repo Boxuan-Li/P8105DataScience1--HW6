@@ -27,16 +27,16 @@ Column {.sidebar}
 
 ```{r}
 max_order = 160000
-min_order = 20000
+min_order = 20000 
   
 # sliderInput widget
 sliderInput("order_range", label = h3("Choose order range"), min = min_order, 
         max = max_order, value = c(20000, 160000))
 
 # radioButtons widget
-days = c("Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday", "Sunday")
+days = c("Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday", "Sunday", "All")
 radioButtons("day_choice", label = h3("Choose day"), 
-            choices = days, select = "Monday")
+            choices = days, select = "All")
 ```
 
 
@@ -69,13 +69,22 @@ renderPlotly({
 days_week <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday") %>%
   factor(., levels = c("Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday", "Sunday"))
 
-Ins.boxplot <- Ins %>%
+
+x_title = list(title = "day in week")
+y_title = list(title = "order hour of day")
+Ins.boxplot_shiny = Ins.boxplot <- Ins %>%
   select(., order_id, day_in_week = order_dow, order_hour_of_day) %>%
   mutate(., day_in_week = days_week[day_in_week + 1]) %>%
-  distinct(., order_id, day_in_week, order_hour_of_day) %>% 
-  filter(day_in_week == input$day_choice) %>% 
+  distinct(., order_id, day_in_week, order_hour_of_day)
+
+all_days = Ins.boxplot_shiny$day_in_week
+
+Ins.boxplot_shiny %>% 
+  filter( if (input$day_choice == "All") { day_in_week == all_days  }else {day_in_week == input$day_choice}) %>% 
   plot_ly(x = ~day_in_week, y = ~order_hour_of_day, 
           color = ~day_in_week, type = "box") %>% 
-  layout(title = "Distribution of Order Hour by Day in a Week")
+  layout(title = "Distribution of Order Hour by Day in a Week", 
+         xaxis = x_title,
+         yaxis = y_title)
 })
 ```
