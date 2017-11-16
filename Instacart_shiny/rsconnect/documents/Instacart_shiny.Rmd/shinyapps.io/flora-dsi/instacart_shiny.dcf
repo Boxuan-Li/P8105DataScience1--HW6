@@ -1,0 +1,10 @@
+name: instacart_shiny
+title:
+username:
+account: flora-dsi
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 236050
+bundleId: 1078135
+url: https://flora-dsi.shinyapps.io/instacart_shiny/
+when: 1510804322.45756

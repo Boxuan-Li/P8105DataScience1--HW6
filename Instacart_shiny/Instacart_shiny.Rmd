@@ -18,7 +18,7 @@ library(shiny)
 ```
 
 ```{r}
-Ins <- read_csv("../../data/instacart_train_data.csv.zip") %>%
+Ins <- read_csv("instacart_train_data.csv.zip") %>%
   clean_names()
 ```
 
@@ -32,6 +32,11 @@ min_order = 20000
 # sliderInput widget
 sliderInput("order_range", label = h3("Choose order range"), min = min_order, 
         max = max_order, value = c(20000, 160000))
+
+# radioButtons widget
+days = c("Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday", "Sunday")
+radioButtons("day_choice", label = h3("Choose day"), 
+            choices = days, select = "Monday")
 ```
 
 
@@ -46,10 +51,10 @@ Ins %>%
   group_by(., aisle) %>%
   summarize(., count = n()) %>%
   top_n(., 10) %>% 
-  mutate(count %in% input$order_range[1]:input$order_range[2]) %>% 
+  filter(count %in% input$order_range[1]:input$order_range[2]) %>% 
   mutate(., aisle = as.factor(aisle),
             aisle = fct_reorder(aisle, count)) %>%
-  plot_ly(x = ~aisle, y = ~count, color = ~aisle, type = "bar", colors = "Set2") %>%
+  plot_ly(x = ~aisle, y = ~count, color = ~aisle, type = "bar", colors = "Set1") %>%
   layout(title = 'The 10 Most Popular Aisles with Most Orders')
 })
 ```
@@ -60,11 +65,17 @@ Row {.tabset .tabset-fade}
 ### Chart B
 
 ```{r}
+renderPlotly({
+days_week <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday") %>%
+  factor(., levels = c("Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday", "Sunday"))
 
-```
-
-### Chart C
-
-```{r}
-
+Ins.boxplot <- Ins %>%
+  select(., order_id, day_in_week = order_dow, order_hour_of_day) %>%
+  mutate(., day_in_week = days_week[day_in_week + 1]) %>%
+  distinct(., order_id, day_in_week, order_hour_of_day) %>% 
+  filter(day_in_week == input$day_choice) %>% 
+  plot_ly(x = ~day_in_week, y = ~order_hour_of_day, 
+          color = ~day_in_week, type = "box") %>% 
+  layout(title = "Distribution of Order Hour by Day in a Week")
+})
 ```
