@@ -5,7 +5,7 @@ navbar:
   right:
     - text: "Plotly"
       href: Instacart_plotly.html
-    - icon: "Shiny"
-      href: Instacart_shiny.html
+    - text: "Shiny"
+      href: https://flora-dsi.shinyapps.io/instacart_shiny/
 output:
   html_document
