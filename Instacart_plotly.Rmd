@@ -49,26 +49,26 @@ Ins %>%
 Column {data-width=450, .tabset}
 -----------------------------------------------------------------------
 
-### Scatterplot Plot of Number of Order by Days in a Week
+### Boxplot for the Distribution of Order Hour by Day in a Week
 
-```{r density plot, message=FALSE, warning=FALSE}
+```{r boxplot, message=FALSE, warning=FALSE}
 days_week <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday") %>%
   factor(., levels = c("Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday", "Sunday"))
 
-Ins_scatter <- Ins %>%
-  distinct(., order_id, order_dow) %>%
-  group_by(., order_dow) %>%
-  summarize(., no_order = n()) %>%
-  mutate(., order_dow = days_week[order_dow+1]) %>%
-  mutate(text_label = str_c("Weekday: ", order_dow, '\nNo.order: ', no_order)) %>% 
-  ggplot(., aes(x = order_dow, y = no_order, color = order_dow)) +
-  geom_point() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  labs(title = "Total Number of Orders on Each Day in a Week",
+Ins.boxplot <- Ins %>%
+  select(., order_id, day_in_week = order_dow, order_hour_of_day) %>%
+  mutate(., day_in_week = days_week[day_in_week+1]) %>%
+  distinct(., order_id, day_in_week, order_hour_of_day) %>%
+  ggplot(., aes(x = day_in_week, order_hour_of_day, color = day_in_week)) +
+  geom_boxplot(position = "dodge") +
+  labs(title = "Distribution of Order Hour by Day in a Week",
        x = "Day",
-       y = "Number of orders")
-  
-ggplotly(Ins_scatter)
+       y = "Order Hour") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        legend.position = "none")
+
+ggplotly(Ins.boxplot)
 ```
 
 ### Piechart of Orders from Each Department
