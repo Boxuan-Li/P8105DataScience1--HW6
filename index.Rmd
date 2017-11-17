@@ -2,9 +2,23 @@
 title: "Plotly and Shiny Analysis on Instacart Dataset"
 ---
 
-This website talks about the method used in the analysis on Instacart dataset.
+## Introduction
+This website is built to display the analysis on the __Instacart dataset__ using plotly and shiny functions through R.
+
+### Methods
+
+* After reading the Instacart dataset, we basically tidied it and looked through the variables that may give interesting analysis.
+
+* At first, we wonder which aisles are most popular across all of the orders. With the group_by function, we counted the number of orders for each aisle and extracted the 10 aisles with largest order numbers by using the top_n function, which were used to make the bar plot through plotly function. In addition, the aisle names were transferred to factor structure and ordered based on the count numbers, presenting the popularity of aisles with the order of increasing order numbers. As a result, we can find that fresh fruits and vegetables are the most popular aisles ordered in the Instacart shop. 
+
+* We also found that the order_hour_of_day is kind of interesting, arounsing our curiosity to explore the distribution of it. In this case, we focus on the distribution of order hour on each day within weeks. For a better visualization, we replace the characters in the 'order_dow' variable with the names of days in a week as factors. The most tricky step in this analysis is that we converged the same orders into one order using the distinct function. Subsequently, we built the boxplot to show the distribution of order hour by day in weeks. The plot shows rare difference of order hour distriburion across days, saying that most customers prefer to shop around noon whichever the day is in a week.
+
+* The third plot is a piechart showing the proportion of order numbers from each department. In this case, we grouped the dataset by the department and counted the number of orders for each department. The plotly automatically produced the piechart, from which it can be discovered that most orders (about 30% of all orders) are from the produce department while pet department only account for 0.3% orders. 
 
 
+## Links
 _You can click [here](Instacart_plotly.html) to view the plotly flexdashboard;_
 
 _You can click [here](https://flora-dsi.shinyapps.io/instacart_shiny/) to view the shiny flexdashboard._
+
+_You can also click [here]("https://github.com/Boxuan-Li/p8105_hw6_bl2689-cz2492") to refer to the source code on GitHub._
