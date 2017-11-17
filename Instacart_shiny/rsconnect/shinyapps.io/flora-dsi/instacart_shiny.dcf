@@ -5,6 +5,6 @@ account: flora-dsi
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 236050
-bundleId: 1079714
+bundleId: 1080132
 url: https://flora-dsi.shinyapps.io/instacart_shiny/
-when: 1510865432.05422
+when: 1510880082.17894
