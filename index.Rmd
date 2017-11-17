@@ -13,12 +13,13 @@ This website is built to display the analysis on the __Instacart dataset__ using
 
 * We also found that the order_hour_of_day is kind of interesting, arounsing our curiosity to explore the distribution of it. In this case, we focus on the distribution of order hour on each day within weeks. For a better visualization, we replace the characters in the 'order_dow' variable with the names of days in a week as factors. The most tricky step in this analysis is that we converged the same orders into one order using the distinct function. Subsequently, we built the boxplot to show the distribution of order hour by day in weeks. The plot shows rare difference of order hour distriburion across days, saying that most customers prefer to shop around noon whichever the day is in a week.
 
-* The third plot is a piechart showing the proportion of order numbers from each department. In this case, we grouped the dataset by the department and counted the number of orders for each department. The plotly automatically produced the piechart, from which it can be discovered that most orders (about 30% of all orders) are from the produce department while pet department only account for 0.3% orders. 
+* The third plot is a piechart showing the proportion of order numbers from each department. In this case, we grouped the dataset by the department and counted the number of orders for each department. The plotly automatically produced the piechart, from which it can be discovered that most orders (about 30% of all orders) are from the produce department while pet department only account for 0.3% orders.
 
+* We also created a shiny-enabled dashboard for the bar plot and boxplot with two widgets. By the first widget, we can change the range of order number among 10 most popular aisles. Different rang are selected, different number of aisles are shown in the barplot. With the second widget, we can either choose one day or all the days in a week to see the distribution of order hour of the day.
 
 ## Links
 _You can click [here](Instacart_plotly.html) to view the plotly flexdashboard;_
 
-_You can click [here](https://flora-dsi.shinyapps.io/instacart_shiny/) to view the shiny flexdashboard._
+_You can click [here](https://flora-dsi.shinyapps.io/instacart_shiny/) to view the shiny flexdashboard；_
 
-_You can also click [here]("https://github.com/Boxuan-Li/p8105_hw6_bl2689-cz2492") to refer to the source code on GitHub._
+_You can also click [here](https://github.com/Boxuan-Li/p8105_hw6_bl2689-cz2492) to refer to the source code on GitHub._

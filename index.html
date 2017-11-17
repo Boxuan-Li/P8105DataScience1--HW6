@@ -208,14 +208,15 @@ $(document).ready(function () {
 <li><p>At first, we wonder which aisles are most popular across all of the orders. With the group_by function, we counted the number of orders for each aisle and extracted the 10 aisles with largest order numbers by using the top_n function, which were used to make the bar plot through plotly function. In addition, the aisle names were transferred to factor structure and ordered based on the count numbers, presenting the popularity of aisles with the order of increasing order numbers. As a result, we can find that fresh fruits and vegetables are the most popular aisles ordered in the Instacart shop.</p></li>
 <li><p>We also found that the order_hour_of_day is kind of interesting, arounsing our curiosity to explore the distribution of it. In this case, we focus on the distribution of order hour on each day within weeks. For a better visualization, we replace the characters in the ‘order_dow’ variable with the names of days in a week as factors. The most tricky step in this analysis is that we converged the same orders into one order using the distinct function. Subsequently, we built the boxplot to show the distribution of order hour by day in weeks. The plot shows rare difference of order hour distriburion across days, saying that most customers prefer to shop around noon whichever the day is in a week.</p></li>
 <li><p>The third plot is a piechart showing the proportion of order numbers from each department. In this case, we grouped the dataset by the department and counted the number of orders for each department. The plotly automatically produced the piechart, from which it can be discovered that most orders (about 30% of all orders) are from the produce department while pet department only account for 0.3% orders.</p></li>
+<li><p>We also created a shiny-enabled dashboard for the bar plot and boxplot with two widgets. By the first widget, we can change the range of order number among 10 most popular aisles. Different rang are selected, different number of aisles are shown in the barplot. With the second widget, we can either choose one day or all the days in a week to see the distribution of order hour of the day.</p></li>
 </ul>
 </div>
 </div>
 <div id="links" class="section level2">
 <h2>Links</h2>
 <p><em>You can click <a href="Instacart_plotly.html">here</a> to view the plotly flexdashboard;</em></p>
-<p><em>You can click <a href="https://flora-dsi.shinyapps.io/instacart_shiny/">here</a> to view the shiny flexdashboard.</em></p>
-<p><em>You can also click <a href="%22https://github.com/Boxuan-Li/p8105_hw6_bl2689-cz2492%22">here</a> to refer to the source code on GitHub.</em></p>
+<p><em>You can click <a href="https://flora-dsi.shinyapps.io/instacart_shiny/">here</a> to view the shiny flexdashboard；</em></p>
+<p><em>You can also click <a href="https://github.com/Boxuan-Li/p8105_hw6_bl2689-cz2492">here</a> to refer to the source code on GitHub.</em></p>
 </div>
 
 
